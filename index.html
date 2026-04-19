@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>코디세이 1차 과제 - Docker 커스텀 이미지</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fb 0%, #e9eef9 100%);
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+
+    .hero {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 56px 40px;
+      box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e0e7ff;
+      color: #4338ca;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 16px;
+      color: #111827;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 0 auto;
+      font-size: 18px;
+      color: #4b5563;
+    }
+
+    .hero-buttons {
+      margin-top: 28px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      text-decoration: none;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: #4f46e5;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #4338ca;
+    }
+
+    .btn-secondary {
+      background: #eef2ff;
+      color: #3730a3;
+    }
+
+    .btn-secondary:hover {
+      background: #e0e7ff;
+    }
+
+    .section-title {
+      font-size: 28px;
+      margin-bottom: 18px;
+      color: #111827;
+    }
+
+    .section-desc {
+      color: #6b7280;
+      margin-bottom: 28px;
+      font-size: 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: #111827;
+    }
+
+    .card p {
+      color: #4b5563;
+      font-size: 15px;
+    }
+
+    .highlight {
+      background: #111827;
+      color: white;
+      border-radius: 24px;
+      padding: 36px;
+      margin-top: 12px;
+      box-shadow: 0 12px 40px rgba(15, 23, 42, 0.14);
+    }
+
+    .highlight h2 {
+      font-size: 30px;
+      margin-bottom: 14px;
+    }
+
+    .highlight p {
+      color: #d1d5db;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .feature-list li {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 14px 16px;
+      color: #f9fafb;
+      font-size: 15px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 36px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 40px 24px;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .highlight h2 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="badge">CODISEI · 1차 과제</div>
+      <h1>기존 이미지를 기반으로<br>나만의 Docker 웹 랜딩페이지 제작</h1>
+      <p>
+        본 페이지는 NGINX 공식 이미지를 기반으로 제작한 커스텀 이미지 실습 결과물입니다.
+        정적 콘텐츠 교체 방식으로 index.html을 수정하여, 코디세이 1차 과제의 목적과 실습 내용을
+        한눈에 볼 수 있는 랜딩페이지 형태로 구성하였습니다.
+      </p>
+      <div class="hero-buttons">
+        <a href="#features" class="btn btn-primary">주요 기능 보기</a>
+        <a href="#summary" class="btn btn-secondary">과제 요약 보기</a>
+      </div>
+    </section>
+
+    <section id="features">
+      <h2 class="section-title">이번 과제에서 구현한 내용</h2>
+      <p class="section-desc">
+        기존 NGINX 웹 서버 이미지를 활용하고, 기본 정적 페이지를 직접 제작한 index.html로 교체하여
+        커스텀 이미지 빌드 및 실행에 성공하였습니다.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>기존 베이스 이미지 활용</h3>
+          <p>
+            NGINX 공식 이미지를 기반으로 선택하여, 기존 웹 서버 환경을 그대로 활용하면서
+            정적 콘텐츠만 교체하는 방식으로 커스터마이징을 진행했습니다.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>정적 콘텐츠 교체</h3>
+          <p>
+            기본 welcome 페이지 대신 과제 목적에 맞는 랜딩페이지형 index.html을 작성하고
+            웹 루트 경로에 복사하여 새로운 화면이 보이도록 구성했습니다.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>커스텀 이미지 빌드</h3>
+          <p>
+            Dockerfile을 작성한 뒤 빌드 명령을 통해 새로운 이미지를 생성하고,
+            해당 이미지가 정상적으로 만들어지는 것을 확인했습니다.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>컨테이너 실행 확인</h3>
+          <p>
+            생성한 이미지를 기반으로 컨테이너를 실행하고,
+            브라우저에서 랜딩페이지가 정상적으로 노출되는지 확인했습니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="highlight" id="summary">
+      <h2>과제 요약</h2>
+      <p>
+        이번 실습은 단순히 이미지를 실행하는 것을 넘어, 기존 이미지를 기반으로 직접 내용을 바꾸고
+        그 결과를 서비스 형태로 확인했다는 점에 의미가 있습니다.
+      </p>
+
+      <ul class="feature-list">
+        <li>기존 베이스 이미지: <strong>nginx:latest</strong></li>
+        <li>커스텀 방식: 정적 HTML 콘텐츠 교체</li>
+        <li>핵심 파일: Dockerfile, index.html</li>
+        <li>빌드 결과: 커스텀 이미지 생성 성공</li>
+        <li>실행 결과: 컨테이너 실행 및 웹 페이지 노출 성공</li>
+        <li>학습 포인트: 이미지 / 컨테이너 / 웹 서버 동작 이해</li>
+      </ul>
+    </section>
+
+    <footer>
+      © 2026 CODISEI Assignment 1 · Docker Custom Image Landing Page
+    </footer>
+  </div>
+</body>
+</html>
