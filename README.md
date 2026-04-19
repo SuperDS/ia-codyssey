@@ -209,6 +209,19 @@ echo "docker volume persistence test" > /data/test.txt
 * docker volume ls -> 도커 볼륨 확인
 * docker volume inspect mydata -> 도커볼륨 마이데이타 확인
 
+
+* docker bind
+mkdir bind-test
+cd bind-test
+echo "바인드 테스트 입니다." > index.html
+
+docker run -d -p 8080:80 --name bind-web --mount type=bind,src="$(pwd)/index.html",dst=/usr/share/nginx/html/index.html \nginx:latest
+
+echo "바인드 테스트 후 입니다." > index.html
+
+docker run -d -p 8081:80 --name bind-web2 --mount type=bind,src="$(pwd)/index.html",dst=/usr/share/nginx/html/index.html \nginx:latest
+
+
 ---
 ## `-it` 옵션
 
