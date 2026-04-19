@@ -174,11 +174,18 @@ lsof -i :8080
 * docker start 컨테이너이름
 - 도커 다시 시작
 
----
 
-docker run -it --name vol-test-2 --mount type=volume,src=mydata,dst=/data ubuntu bash
+* docker run -it --name vol-test-1 --mount type=volume,src=mydata,dst=/data ubuntu bash
+echo "docker volume persistence test" > /data/test.txt
 
 
+
+* docker run -it --name vol-test-2 --mount type=volume,src=mydata,dst=/data ubuntu bash
+- 도커볼륨 영속성 확인
+
+
+* docker volume ls -> 도커 볼륨 확인
+* docker volume inspect mydata -> 도커볼륨 마이데이타 확인
 
 ---
 ## `-it` 옵션
@@ -235,11 +242,6 @@ docker run -it --name vol-test-2 --mount type=volume,src=mydata,dst=/data ubuntu
 - 쉽게 말하면 컨테이너 안에서 보이는 연결 위치가 `/data`이다.
 
 즉, `mydata`라는 Docker 볼륨을 컨테이너 내부 `/data` 폴더에 연결하는 설정이다.
-
----
-
-#
-
 
 
 
