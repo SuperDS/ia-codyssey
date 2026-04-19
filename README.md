@@ -147,7 +147,7 @@ r w x 1 2 4
 * 우분투 실행 bash 로
 - docker run -it --name myubuntu ubuntu bash
 
-* 도커 정적컨텐츠 실행
+* 도커 Index.html 실행
 - docker build -t codyssey-web .
 
 build : 이미지 만들기
@@ -162,11 +162,17 @@ docker run -d -p 8080:80 --name codyssey-nginx codyssey-web
 --name codyssey-nginx : 컨테이너 이름 지정(컨테이너 이름이 다르면 오류)
 codyssey-web : 방금 만든 이미지 이름
 
+lsof -i :8080 
+명령으로 8080 포트 사용 여부를 사전 확인
+
 * docker exec -it [컨테이너id]] bash 
 - 실행중인 도커 접속
 
 * docker stop [컨테이너 id]
 - 도커 정지
+
+* docker start 컨테이너이름
+- 도커 다시 시작
 
 ---
 
@@ -240,12 +246,8 @@ docker run -it --name vol-test-2 --mount type=volume,src=mydata,dst=/data ubuntu
 ---
 * 트러블슈팅 2건 이상(문제-> 원인가설 -> 확인 -> 해결/대안)
 
+* 도커 삭제 안됨 -> 도커 실행중인가? -> 확인함 -> 도커 중지 -> 도커 컨테이너 삭제
 
-* 터미널 조작 로그-> 터미널 수행한 핵심명령과 출력결과를 기술문서에 저장
-
-
+* 포트매핑 실패 -> 포트를 누군가 사용하고있으면 매핑이 안됨 -> 포트매핑 확인 -> 재설정 -> 해결
+명령으로 8080 포트 사용 여부를 사전 확인
 --- 
-
-* docker
-
-2. 
