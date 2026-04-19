@@ -71,10 +71,9 @@ ex : chmod 777 [파일 혹은 폴더명]
 예를 들어 같은 팀원끼리 같은 그룹으로 묶어둘 수 있습니다.
 
 기타(other)
-
+소유자도 아니고, 해당 그룹도 아닌 나머지 모든 사용자입니다.
 
 ---
-소유자도 아니고, 해당 그룹도 아닌 나머지 모든 사용자입니다.
 
 권한 숫자는 r, w, x를 숫자로 바꿔서 더한 것입니다.
 
@@ -98,6 +97,117 @@ r w x 1 2 4
 
 
 ---
+## Docker
+
+## Docker 기본 명령어 정리
+
+- `docker -v`  
+  Docker 버전을 간단히 확인한다.
+
+- `docker --version`  
+  Docker 버전을 확인한다.
+
+- `docker info`  
+  Docker 설치 및 실행 환경 점검 결과를 확인한다.
+
+- `docker images`  
+  현재 로컬에 저장된 Docker 이미지 목록을 확인한다.
+
+- `docker ps -a`  
+  실행 중인 컨테이너와 종료된 컨테이너를 모두 확인한다.
+
+- `docker logs 컨테이너명`  
+  해당 컨테이너가 실행 중 또는 종료 전에 남긴 로그를 확인한다.
+
+- `docker stats`  
+  실행 중인 컨테이너의 CPU, 메모리 등 자원 사용량을 실시간으로 확인한다.
+
+---
+
+## `docker run` 명령
+
+`run`은 Docker에서 아주 중요한 명령이다.
+
+의미:
+- 이미지를 바탕으로
+- 새 컨테이너를 생성하고
+- 바로 실행한다.
+
+즉, `run` 하나 안에는 보통 다음 두 동작이 포함된다.
+
+- `create` : 컨테이너 생성
+- `start` : 컨테이너 시작
+
+---
+
+## `-it` 옵션
+
+`-it`는 사실 `-i`와 `-t`가 합쳐진 옵션이다.
+
+### `-i`
+- `interactive`
+- 표준 입력을 열어둔다는 뜻이다.
+- 사용자가 키보드로 직접 입력할 수 있게 한다.
+
+### `-t`
+- `tty`
+- 터미널 화면처럼 보이게 해준다.
+- 컨테이너 내부 셸을 일반 터미널처럼 사용할 수 있게 한다.
+
+즉, `-it`를 사용하면 컨테이너 안에 들어가 직접 명령어를 입력할 수 있다.
+
+---
+
+## `--name vol-test-2`
+
+이 옵션은 컨테이너 이름을 직접 지정하는 역할을 한다.
+
+- `--name`  
+  컨테이너 이름을 사용자가 직접 지정하겠다는 뜻이다.
+
+- `vol-test-2`  
+  지정한 컨테이너 이름이다.
+
+즉, 이 컨테이너의 이름을 `vol-test-2`로 설정하겠다는 의미이다.
+
+---
+
+## `--mount type=volume,src=mydata,dst=/data`
+
+이 부분은 Docker 볼륨을 컨테이너에 연결하는 옵션이다.
+
+### `--mount`
+- 저장공간을 어디에, 어떤 방식으로 연결할지 지정한다.
+
+### `type=volume`
+- 연결할 저장공간의 종류가 `volume`이라는 뜻이다.
+- 즉, bind mount나 tmpfs가 아니라 Docker volume을 사용한다.
+
+### `src=mydata`
+- `source`의 약자이다.
+- Docker 안에 있는 `mydata`라는 이름의 볼륨을 사용하겠다는 뜻이다.
+- 쉽게 말하면 바깥 저장소 이름이 `mydata`이다.
+
+### `dst=/data`
+- `destination`의 약자이다.
+- 컨테이너 내부의 `/data` 경로에 연결하겠다는 뜻이다.
+- 쉽게 말하면 컨테이너 안에서 보이는 연결 위치가 `/data`이다.
+
+즉, `mydata`라는 Docker 볼륨을 컨테이너 내부 `/data` 폴더에 연결하는 설정이다.
+
+---
+
+## 전체 명령 해석
+
+```bash
+docker run -it --name vol-test-2 --mount type=volume,src=mydata,dst=/data ubuntu bash
+
+
+
+
+
+
+---
 * 트러블슈팅 2건 이상(문제-> 원인가설 -> 확인 -> 해결/대안)
 
 
@@ -107,102 +217,5 @@ r w x 1 2 4
 --- 
 
 * docker
-docker --version
-docker info 설치 점검 결과
 
-docker images
-docker ps -a
-docker logs
-docker stats
-
-
-
-2. run
-
-run은 도커에서 아주 중요한 명령입니다.
-
-뜻:
-
-이미지를 바탕으로
-새 컨테이너를 생성하고
-바로 실행한다
-
-즉 run 하나 안에 보통 두 동작이 들어 있습니다.
-
-create(생성)
-start(시작)
-
--it
-
-이건 사실 -i와 -t가 붙은 것입니다.
-
--i
-
-interactive
-표준 입력을 열어둔다는 뜻입니다.
-
-즉, 내가 키보드로 입력할 수 있게 해줍니다.
-
--t
-
-tty
-터미널 화면처럼 보이게 해줍니다.
-
-즉, 셸에 들어갔을 때 우리가 익숙한 터미널 형태로 사용할 수 있게 합니다.
-
----
-
---name vol-test-2
-
-이건 컨테이너 이름을 지정하는 옵션입니다.
-
---name
-
-“이 컨테이너 이름을 내가 직접 정할게”라는 뜻
-
-vol-test-2
-
-정해준 컨테이너 이름
-
-즉,
-이 컨테이너 이름을 vol-test-2로 하겠다는 뜻입니다.
-
----
---mount type=volume,src=mydata,dst=/data
-
-이 부분이 제일 중요합니다.
-볼륨을 연결하는 부분입니다.
-
---mount는 “저장공간을 어디에 어떻게 연결할지” 정하는 옵션입니다.
-
-이 안을 다시 나누면:
-
-type=volume
-
-연결할 저장공간의 종류가 volume이라는 뜻입니다.
-
-즉:
-
-bind mount 아님
-tmpfs 아님
-Docker volume 사용
-src=mydata
-
-source = 원본 이름
-
-즉, 도커 안에 있는 mydata라는 볼륨을 쓰겠다는 뜻입니다.
-
-쉽게 말하면:
-
-바깥 저장소 이름 = mydata
-dst=/data
-
-destination = 컨테이너 안에서 붙일 위치
-
-즉, 컨테이너 내부의 /data 경로에 연결하겠다는 뜻입니다.
-
-쉽게 말하면:
-
-컨테이너 안에서 보이는 연결 위치 = /data
-
-docker run -it --name vol-test-2 --mount type=volume,src=mydata,dst=/data ubuntu bash
+2. 
