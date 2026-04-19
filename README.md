@@ -112,6 +112,7 @@ r w x 1 2 4
 
 - `docker images`  
   현재 로컬에 저장된 Docker 이미지 목록을 확인한다.
+  (docker rmi repository -> 도커 이미지 삭제)
 
 - `docker ps -a`  
   실행 중인 컨테이너와 종료된 컨테이너를 모두 확인한다.
@@ -140,6 +141,40 @@ r w x 1 2 4
 
 ---
 
+* hello-world 이미지 실행시키기
+- docker run hello-world -> 이미지다운로드 및 실행 -> docker logs [id]로 확인가능
+
+* 우분투 실행 bash 로
+- docker run -it --name myubuntu ubuntu bash
+
+* 도커 정적컨텐츠 실행
+- docker build -t codyssey-web .
+
+build : 이미지 만들기
+-t codyssey-web : 이미지 이름을 codyssey-web으로 지정 . : 현재 폴더 기준으로 빌드
+
+* 도커 포트 매핑
+docker run -d -p 8080:80 --name codyssey-nginx codyssey-web
+
+-d : 백그라운드 실행
+-p 8080:80 : 내 컴퓨터 8080 포트를 컨테이너 80 포트와 연결
+-p 8080:80 : 내 컴퓨터 8081 포트를 컨테이너 81 포트와 연결
+--name codyssey-nginx : 컨테이너 이름 지정(컨테이너 이름이 다르면 오류)
+codyssey-web : 방금 만든 이미지 이름
+
+* docker exec -it [컨테이너id]] bash 
+- 실행중인 도커 접속
+
+* docker stop [컨테이너 id]
+- 도커 정지
+
+---
+
+docker run -it --name vol-test-2 --mount type=volume,src=mydata,dst=/data ubuntu bash
+
+
+
+---
 ## `-it` 옵션
 
 `-it`는 사실 `-i`와 `-t`가 합쳐진 옵션이다.
@@ -197,12 +232,7 @@ r w x 1 2 4
 
 ---
 
-## 전체 명령 해석
-
-```bash
-docker run -it --name vol-test-2 --mount type=volume,src=mydata,dst=/data ubuntu bash
-
-
+#
 
 
 
